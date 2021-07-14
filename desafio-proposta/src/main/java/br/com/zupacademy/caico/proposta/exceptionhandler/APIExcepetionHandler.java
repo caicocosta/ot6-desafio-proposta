@@ -2,7 +2,6 @@ package br.com.zupacademy.caico.proposta.exceptionhandler;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
