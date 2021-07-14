@@ -11,6 +11,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
+import br.com.zupacademy.caico.proposta.criacaoproposta.analiserestricao.StatusProposta;
+
 @Entity
 public class Propostas {
 

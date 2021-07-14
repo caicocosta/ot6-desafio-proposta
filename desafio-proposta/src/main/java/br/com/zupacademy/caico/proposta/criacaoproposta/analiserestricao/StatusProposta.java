@@ -1,4 +1,4 @@
-package br.com.zupacademy.caico.proposta.criacaoproposta;
+package br.com.zupacademy.caico.proposta.criacaoproposta.analiserestricao;
 
 public enum StatusProposta {
 

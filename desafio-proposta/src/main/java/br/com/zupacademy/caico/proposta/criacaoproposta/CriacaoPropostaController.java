@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import br.com.zupacademy.caico.proposta.criacaoproposta.analiserestricao.AnalisePropostaRequest;
+import br.com.zupacademy.caico.proposta.criacaoproposta.analiserestricao.RetornoAnaliseProposta;
+import br.com.zupacademy.caico.proposta.criacaoproposta.analiserestricao.SolicitacaoClient;
 import br.com.zupacademy.caico.proposta.exceptionhandler.ApiErroException;
 
 @RestController
@@ -22,7 +25,7 @@ public class CriacaoPropostaController {
 	private PropostaRepository propostaRepository;
 	
 	@Autowired
-	private AnaliseSolicitacao analiseSolicitacao;
+	private SolicitacaoClient solicitacaoCliente;
 	
 	@PostMapping("/propostas")
 	@Transactional
@@ -48,7 +51,14 @@ public class CriacaoPropostaController {
 	
 
 	private void processaSolicitacao(Propostas proposta) {
-		RetornoAnaliseProposta retornoProposta = analiseSolicitacao.getRestricao(proposta); 
+		
+		AnalisePropostaRequest analiseRequest = new AnalisePropostaRequest(
+				proposta.getDocumento(),
+				proposta.getNome(),
+				String.valueOf(proposta.getId())
+				);
+		
+		RetornoAnaliseProposta retornoProposta = solicitacaoCliente.getRestricao(analiseRequest);
 		
 		proposta.setStatus(retornoProposta.getResultadoSolicitacao().getStatusProposta());
 		
