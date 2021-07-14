@@ -2,6 +2,7 @@ package br.com.zupacademy.caico.proposta.exceptionhandler;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -53,5 +54,18 @@ public class APIExcepetionHandler extends ResponseEntityExceptionHandler{
 		errosDTO.setCampos(campos);
 
 		return super.handleExceptionInternal(ex, errosDTO, headers, status, request);
+	}
+	
+	@ExceptionHandler(ApiErroException.class)
+	public ResponseEntity<ErrosDTO> handleApiErroException(ApiErroException apiErroException) {
+	    
+		var status = apiErroException.getHttpStatus();
+		var errosDTO = new ErrosDTO();
+		
+		errosDTO.setStatus(status.value());
+		errosDTO.setDataHora(OffsetDateTime.now());
+		errosDTO.setTitulo(apiErroException.getReason());
+
+	    return ResponseEntity.status(apiErroException.getHttpStatus()).body(errosDTO);
 	}
 }

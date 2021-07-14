@@ -37,6 +37,11 @@ public class Propostas {
 	@NotNull @Positive
 	@Column(nullable = false)
 	private BigDecimal salario;
+	
+	@Deprecated
+	public Propostas() {
+		
+	}
 
 	public Propostas(@NotBlank String documento, @NotBlank @Email String email, @NotBlank String nome,
 			@NotBlank String endereco, @NotNull BigDecimal salario) {
