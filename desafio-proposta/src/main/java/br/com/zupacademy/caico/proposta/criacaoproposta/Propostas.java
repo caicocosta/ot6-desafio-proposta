@@ -38,6 +38,9 @@ public class Propostas {
 	@Column(nullable = false)
 	private BigDecimal salario;
 	
+	@NotNull
+	private StatusProposta status = StatusProposta.AGUARDANDO_ANALISE;
+	
 	@Deprecated
 	public Propostas() {
 		
@@ -57,5 +60,16 @@ public class Propostas {
 		return id;
 	}
 	
+	public String getDocumento() {
+		return documento;
+	}
+	
+	public String getNome() {
+		return nome;
+	}
+	
+	public void setStatus(StatusProposta status) {
+		this.status = status;
+	}
 	
 }

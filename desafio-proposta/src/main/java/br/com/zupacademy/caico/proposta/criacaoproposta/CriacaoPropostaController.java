@@ -2,8 +2,6 @@ package br.com.zupacademy.caico.proposta.criacaoproposta;
 
 import java.net.URI;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -20,11 +18,11 @@ import br.com.zupacademy.caico.proposta.exceptionhandler.ApiErroException;
 @RestController
 public class CriacaoPropostaController {
 
-	@PersistenceContext
-	private EntityManager entityManager;
-	
 	@Autowired
 	private PropostaRepository propostaRepository;
+	
+	@Autowired
+	private AnaliseSolicitacao analiseSolicitacao;
 	
 	@PostMapping("/propostas")
 	@Transactional
@@ -34,17 +32,31 @@ public class CriacaoPropostaController {
 		
 		if(propostaExistente != null) {
 			throw new ApiErroException(HttpStatus.UNPROCESSABLE_ENTITY, "Já existe uma proposta cadastrada para esse usuário");
-		}
+		} 
 		
 		Propostas proposta = request.toModel(request);
 		
-		entityManager.persist(proposta);
+		propostaRepository.save(proposta);
+		
+		processaSolicitacao(proposta);
 		
 		URI retornoURI = formataURI(uri, proposta);
 		
 		return ResponseEntity.created(retornoURI).build();
 	}
+	
+	
 
+	private void processaSolicitacao(Propostas proposta) {
+		RetornoAnaliseProposta retornoProposta = analiseSolicitacao.getRestricao(proposta); 
+		
+		proposta.setStatus(retornoProposta.getResultadoSolicitacao().getStatusProposta());
+		
+		propostaRepository.save(proposta);
+	}
+
+	
+	
 	private URI formataURI(UriComponentsBuilder uri, Propostas proposta) {
 		URI uriRetorno = uri.path("/nova-proposta/{id}").buildAndExpand(proposta.getId().toString()).toUri();
 		return uriRetorno;
