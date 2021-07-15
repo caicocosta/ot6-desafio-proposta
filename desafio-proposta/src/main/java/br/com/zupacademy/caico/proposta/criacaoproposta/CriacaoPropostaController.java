@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import br.com.zupacademy.caico.proposta.clientesfeign.SolicitacaoClientFeign;
 import br.com.zupacademy.caico.proposta.criacaoproposta.analiserestricao.AnalisePropostaRequest;
 import br.com.zupacademy.caico.proposta.criacaoproposta.analiserestricao.RetornoAnaliseProposta;
-import br.com.zupacademy.caico.proposta.criacaoproposta.analiserestricao.SolicitacaoClient;
 import br.com.zupacademy.caico.proposta.exceptionhandler.ApiErroException;
 
 @RestController
@@ -25,7 +25,7 @@ public class CriacaoPropostaController {
 	private PropostaRepository propostaRepository;
 	
 	@Autowired
-	private SolicitacaoClient solicitacaoCliente;
+	private SolicitacaoClientFeign solicitacaoCliente;
 	
 	@PostMapping("/propostas")
 	@Transactional
