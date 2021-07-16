@@ -18,7 +18,7 @@ public class Propostas {
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	
 	@NotBlank
 	@Column(nullable = false)
@@ -58,7 +58,7 @@ public class Propostas {
 		this.salario = salario;
 	}
 	
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 	
@@ -72,6 +72,10 @@ public class Propostas {
 	
 	public void setStatus(StatusProposta status) {
 		this.status = status;
+	}
+	
+	public StatusProposta getStatus() {
+		return status;
 	}
 	
 }
