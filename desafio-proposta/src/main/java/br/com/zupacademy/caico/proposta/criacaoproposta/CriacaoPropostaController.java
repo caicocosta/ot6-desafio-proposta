@@ -16,7 +16,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 import br.com.zupacademy.caico.proposta.clientesfeign.SolicitacaoClientFeign;
 import br.com.zupacademy.caico.proposta.criacaoproposta.analiserestricao.AnalisePropostaRequest;
 import br.com.zupacademy.caico.proposta.criacaoproposta.analiserestricao.RetornoAnaliseProposta;
+import br.com.zupacademy.caico.proposta.criacaoproposta.analiserestricao.StatusProposta;
 import br.com.zupacademy.caico.proposta.exceptionhandler.ApiErroException;
+import feign.FeignException;
 
 @RestController
 public class CriacaoPropostaController {
@@ -57,12 +59,19 @@ public class CriacaoPropostaController {
 				proposta.getNome(),
 				String.valueOf(proposta.getId())
 				);
+		try {
+			RetornoAnaliseProposta retornoProposta = solicitacaoCliente.getRestricao(analiseRequest);
+			proposta.setStatus(retornoProposta.getResultadoSolicitacao().getStatusProposta());
+			propostaRepository.save(proposta);
+		} catch (FeignException e) {
+			if (e.status() == 422) {
+				proposta.setStatus(StatusProposta.NAO_ELEGIVEL);
+				propostaRepository.save(proposta);
+				throw new ApiErroException(HttpStatus.UNPROCESSABLE_ENTITY, "Solicitante com restrição");	
+			}
+			throw new ApiErroException(HttpStatus.BAD_GATEWAY, "Houve um problema com a conexão ao servidor.");
+		}
 		
-		RetornoAnaliseProposta retornoProposta = solicitacaoCliente.getRestricao(analiseRequest);
-		
-		proposta.setStatus(retornoProposta.getResultadoSolicitacao().getStatusProposta());
-		
-		propostaRepository.save(proposta);
 	}
 
 	
