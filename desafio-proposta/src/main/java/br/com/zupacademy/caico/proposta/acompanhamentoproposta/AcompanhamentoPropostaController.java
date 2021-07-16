@@ -22,11 +22,9 @@ public class AcompanhamentoPropostaController {
 	@GetMapping("/propostas/acompanhamento/{id}")
 	public ResponseEntity<PropostaResponse> acompanhamento(@PathVariable Long id){
 		
-		Propostas proposta = propostaRepository.getById(id);
-		
-		if(proposta == null) {
-			throw new ApiErroException(HttpStatus.NOT_FOUND, "Proposta inválida");
-		}
+		Propostas proposta = propostaRepository.findById(id)
+				.orElseThrow(() -> 
+			new ApiErroException(HttpStatus.NOT_FOUND, "Proposta inválida"));
 		
 		PropostaResponse response = new PropostaResponse(
 				proposta.getId(), 
