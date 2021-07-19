@@ -34,6 +34,11 @@ public class Cartoes {
 	@NotNull
 	@ManyToOne
 	private Propostas proposta;
+	
+	@Deprecated
+	public Cartoes() {
+		
+	}
 
 	public Cartoes(@NotBlank String numCartao, @NotNull LocalDateTime emitidoEm, @NotBlank String titular,
 			@NotNull Integer limite, Boolean renegociacao, @NotNull Propostas proposta) {
