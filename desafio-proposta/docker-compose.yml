@@ -44,7 +44,7 @@ services:
       POSTGRES_USER: apiproposta
       POSTGRES_PASSWORD: password
       POSTGRES_DB: proposta
-      POSTGRES_HOST: postgres
+      POSTGRES_HOST: databaseapi
 
   keycloak:
     image: jboss/keycloak
