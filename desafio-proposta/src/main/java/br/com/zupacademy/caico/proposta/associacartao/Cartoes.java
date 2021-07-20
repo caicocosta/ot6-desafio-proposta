@@ -1,14 +1,20 @@
 package br.com.zupacademy.caico.proposta.associacartao;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import br.com.zupacademy.caico.proposta.bloqueiocartao.HistoricoCartao;
+import br.com.zupacademy.caico.proposta.bloqueiocartao.StatusCartao;
 import br.com.zupacademy.caico.proposta.criacaoproposta.Propostas;
 
 @Entity
@@ -78,5 +84,21 @@ public class Cartoes {
 	public Propostas getProposta() {
 		return proposta;
 	}
-	
+
+	public HistoricoCartao bloqueiaCartao(HttpServletRequest request) {
+		String ipAddress = request.getHeader("x-forwarded-for");
+		if (ipAddress == null) {
+		    ipAddress = request.getHeader("X_FORWARDED_FOR");
+		    if (ipAddress == null){
+		        ipAddress = request.getRemoteAddr();
+		    }
+		}
+		
+		String userAgent = request.getHeader("User-Agent");
+		
+		HistoricoCartao novoHistorico = new HistoricoCartao(ipAddress, userAgent, this);
+		novoHistorico.setStatus(StatusCartao.BLOQUEADO);
+		return novoHistorico;
+	}
+
 }

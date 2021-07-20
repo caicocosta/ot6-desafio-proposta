@@ -3,19 +3,19 @@ package br.com.zupacademy.caico.proposta.associacartao;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import br.com.zupacademy.caico.proposta.bloqueiocartao.HistoricoCartao;
 import br.com.zupacademy.caico.proposta.clientesfeign.VerificaContaFeign;
 import br.com.zupacademy.caico.proposta.criacaoproposta.PropostaRepository;
 import br.com.zupacademy.caico.proposta.criacaoproposta.Propostas;
 import br.com.zupacademy.caico.proposta.criacaoproposta.analiserestricao.AnalisePropostaRequest;
 import br.com.zupacademy.caico.proposta.criacaoproposta.analiserestricao.StatusProposta;
 import br.com.zupacademy.caico.proposta.exceptionhandler.ApiErroException;
-import feign.FeignException.FeignClientException;
-import feign.FeignException.FeignServerException;
 import feign.RetryableException;
 
 @Component
@@ -29,6 +29,9 @@ public class AssociaCartoesSchedule {
 	
 	@Autowired
 	private CartoesRepository cartoesRepository;
+
+	@Autowired
+	private HistoricoCartaoRepository historicoCartaoRepository;
 	
 	@Async
 	@Scheduled(fixedDelayString = "${periodicidade.executa-operacao}")
@@ -53,6 +56,10 @@ public class AssociaCartoesSchedule {
 				RetornoAPICartao retornoAPICartao = verificaContaFeign.getNumeroCartao(request);
 				Cartoes cartao = retornoAPICartao.toModel(propostas);
 				cartoesRepository.save(cartao);
+
+				HistoricoCartao historicoCartao = new HistoricoCartao("LocalHost", "Save", cartao);
+				historicoCartaoRepository.save(historicoCartao);
+				
 				propostas.setStatus(StatusProposta.CONCLUIDA);
 				propostaRepository.save(propostas);
 			} catch (RetryableException e) {
