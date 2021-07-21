@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CartoesRepository extends JpaRepository<Cartoes, Long>{
 
+    Cartoes findByNumCartao(String NumCartao);
 }
