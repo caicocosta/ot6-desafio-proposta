@@ -25,7 +25,7 @@ public class Cartoes {
 	private Long id;
 	
 	@NotBlank
-	private String NumCartao;
+	private String numCartao;
 	
 	@NotNull
 	private LocalDateTime emitidoEm;
@@ -49,7 +49,7 @@ public class Cartoes {
 	public Cartoes(@NotBlank String numCartao, @NotNull LocalDateTime emitidoEm, @NotBlank String titular,
 			@NotNull Integer limite, Boolean renegociacao, @NotNull Propostas proposta) {
 		super();
-		NumCartao = numCartao;
+		this.numCartao = numCartao;
 		this.emitidoEm = emitidoEm;
 		this.titular = titular;
 		this.limite = limite;
@@ -62,7 +62,7 @@ public class Cartoes {
 	}
 
 	public String getNumCartao() {
-		return NumCartao;
+		return numCartao;
 	}
 
 	public LocalDateTime getEmitidoEm() {
