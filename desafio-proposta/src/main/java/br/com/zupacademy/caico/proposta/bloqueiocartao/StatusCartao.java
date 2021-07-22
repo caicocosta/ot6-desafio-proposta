@@ -4,7 +4,9 @@ public enum StatusCartao {
 	
 	ENVIADO,
 	ATIVO,
-	BLOQUEADO
+	BLOQUEADO,
+	ASSOCIADA,
+	CRIADO
 	
 
 }

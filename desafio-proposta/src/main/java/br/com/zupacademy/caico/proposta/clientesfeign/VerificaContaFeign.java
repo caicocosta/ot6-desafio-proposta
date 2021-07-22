@@ -1,5 +1,6 @@
 package br.com.zupacademy.caico.proposta.clientesfeign;
 
+import br.com.zupacademy.caico.proposta.associacarteira.AssociaCarteiraRequest;
 import br.com.zupacademy.caico.proposta.avisoviagens.AvisoViagensRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,5 +28,8 @@ public interface VerificaContaFeign {
 	ResultadoConsultasCartao bloquearCartao(@RequestBody SistemaLegadoCartaoRequest sistemaResponsavel, @PathVariable String id);
 
 	@RequestMapping(method = RequestMethod.POST, value = "api/cartoes/{id}/avisos")
-	ResultadoConsultasCartao avisoViagem(@RequestBody AvisoViagensRequest AvisoViagem, @PathVariable String id);
+	ResultadoConsultasCartao avisoViagem(@RequestBody AvisoViagensRequest avisoViagem, @PathVariable String id);
+
+	@RequestMapping(method = RequestMethod.POST, value = "api/cartoes/{id}/carteiras")
+	ResultadoConsultasCartao associaCarteira(@RequestBody AssociaCarteiraRequest associaCarteiraRequest, @PathVariable String id);
 }
