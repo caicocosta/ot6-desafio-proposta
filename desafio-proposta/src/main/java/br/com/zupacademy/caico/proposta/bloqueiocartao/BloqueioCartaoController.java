@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import br.com.zupacademy.caico.proposta.associacartao.ResultadoConsultasCartao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,7 +54,7 @@ public class BloqueioCartaoController {
 		//2
 		try {
 			SistemaLegadoCartaoRequest requestSistemaLegado = new SistemaLegadoCartaoRequest("MINHA API");
-			ResultadoBloqueioCartao status = verificaContaFeign.bloquearCartao(requestSistemaLegado, cartao.getNumCartao());
+			ResultadoConsultasCartao status = verificaContaFeign.bloquearCartao(requestSistemaLegado, cartao.getNumCartao());
 		} catch (FeignClientException e) {
 			if (e.status() == 500) {
 				throw new ApiErroException(HttpStatus.BAD_GATEWAY, "Houve um erro ao se conectar ao sevidor.");
