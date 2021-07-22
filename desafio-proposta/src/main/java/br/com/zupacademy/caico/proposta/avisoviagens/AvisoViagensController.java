@@ -52,7 +52,7 @@ public class AvisoViagensController {
             ResultadoConsultasCartao resultado = verificaContaFeign.avisoViagem(avisoViagensRequest, cartao.getNumCartao());
         }catch (FeignException.FeignClientException e){
             if (e.status() == 400){
-                throw new ApiErroException(HttpStatus.BAD_REQUEST, "Não foi possível cadastrar o aviso de viagem.");
+                throw new ApiErroException(HttpStatus.BAD_REQUEST, e.getMessage());
             }
 
             throw new ApiErroException(HttpStatus.BAD_GATEWAY, "Houve um erro no servidor ao processar essa requisição.");

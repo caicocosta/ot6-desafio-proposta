@@ -32,11 +32,11 @@ public class AvisoViagensRequest {
         return destino;
     }
 
-    public LocalDate getDataTerminoViagem() {
+    public LocalDate getValidoAte() {
         return validoAte;
     }
 
-    public void setDataTerminoViagem(LocalDate dataTerminoViagem) {
+    public void setValidoAte(LocalDate dataTerminoViagem) {
         this.validoAte = dataTerminoViagem;
     }
 
