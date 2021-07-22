@@ -13,9 +13,9 @@ public class CarteirasCartoes {
     @GeneratedValue
     private Long id;
 
-    @NotBlank
+    @NotNull
     @Column(nullable = false)
-    private String carteira;
+    private Carteira carteira;
 
     @NotNull
     @ManyToOne
@@ -26,7 +26,7 @@ public class CarteirasCartoes {
 
     }
 
-    public CarteirasCartoes(String carteira, Cartoes cartao) {
+    public CarteirasCartoes(Carteira carteira, Cartoes cartao) {
         this.carteira = carteira;
         this.cartao = cartao;
     }
