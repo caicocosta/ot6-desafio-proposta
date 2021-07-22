@@ -30,14 +30,12 @@ public class AssociaCarteiraController {
     @Autowired
     private VerificaContaFeign verificaContaFeign;
 
-    @PostMapping("/cartoes/{numCartao}/associacarteira/paypal")
+    @PostMapping("/cartoes/{numCartao}/associacarteira")
     public ResponseEntity<?> associaCartao(
             @RequestBody @Valid AssociaCarteiraRequest associaCarteiraRequest,
             @PathVariable String numCartao,
             UriComponentsBuilder uri){
 
-        System.out.println("Teste: " + associaCarteiraRequest.getEmail());
-        associaCarteiraRequest.setCarteira("PAYPAL");
         Cartoes cartao = cartoesRepository.findByNumCartao(numCartao);
 
         if (!PermiteAssociarCarteira(cartao, associaCarteiraRequest)){
@@ -70,7 +68,7 @@ public class AssociaCarteiraController {
             ResultadoConsultasCartao resultado = verificaContaFeign.associaCarteira(associaCarteiraRequest, cartao.getNumCartao());
         } catch (FeignException.FeignClientException e){
             if (e.status() == 400){
-                throw new ApiErroException(HttpStatus.BAD_REQUEST, "Não foi possível associar o cartão a essa carteira.");
+                throw new ApiErroException(HttpStatus.BAD_REQUEST, e.getMessage());
             }
 
             throw new ApiErroException(HttpStatus.BAD_GATEWAY, "Houve um erro no servidor ao processar essa requisição.");

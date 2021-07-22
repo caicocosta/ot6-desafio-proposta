@@ -1,0 +1,2 @@
+update  carteiras_cartoes
+set carteira = case when carteira = 'PAYPAL' then 0 else 1 end;

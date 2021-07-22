@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CarteirasCartoesRepository extends JpaRepository<CarteirasCartoes, Long> {
-    CarteirasCartoes findByCartaoIdAndCarteira(Long cartaoId, String carteira);
+    CarteirasCartoes findByCartaoIdAndCarteira(Long cartaoId, Carteira carteira);
 }
