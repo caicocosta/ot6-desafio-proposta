@@ -38,7 +38,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter{
 			.antMatchers(HttpMethod.POST, "/processa-ranking").permitAll()
 			.antMatchers(HttpMethod.GET, "/actuator").permitAll()
 			.antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
-			.antMatchers(HttpMethod.POST, "/cartoes/bloqueio/**").hasAuthority("SCOPE_escopo-cartoes")
+			.antMatchers(HttpMethod.POST, "/cartoes/**").hasAuthority("SCOPE_escopo-cartoes")
 			.anyRequest().authenticated()
 			.and().cors()
 			.and().csrf().disable()

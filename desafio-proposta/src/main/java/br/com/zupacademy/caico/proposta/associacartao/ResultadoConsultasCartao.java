@@ -1,6 +1,8 @@
-package br.com.zupacademy.caico.proposta.bloqueiocartao;
+package br.com.zupacademy.caico.proposta.associacartao;
 
-public class ResultadoBloqueioCartao {
+import br.com.zupacademy.caico.proposta.bloqueiocartao.StatusCartao;
+
+public class ResultadoConsultasCartao {
 
 	private StatusCartao resultado;
 	
