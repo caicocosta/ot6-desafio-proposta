@@ -78,8 +78,11 @@ public class CriaPropostaRequest {
 		this.salario = salario;
 	}
 
-	public Propostas toModel(@Valid CriaPropostaRequest request) {
-		Propostas proposta = new Propostas(this.documento, this.email, this.nome, this.endereco, salario);
+	public Propostas toModel(@Valid CriaPropostaRequest request, CriptografaTexto criptografaTexto) {
+
+		String documentoEncriptado = criptografaTexto.encriptar(this.documento);
+
+		Propostas proposta = new Propostas(documentoEncriptado, this.email, this.nome, this.endereco, salario);
 		
 		if(!documentoValido()) {
 			throw new Exceptions("O documento informádo é inválido.");

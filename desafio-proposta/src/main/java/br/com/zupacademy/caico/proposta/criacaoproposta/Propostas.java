@@ -1,6 +1,7 @@
 package br.com.zupacademy.caico.proposta.criacaoproposta;
 
 import java.math.BigDecimal;
+import java.util.stream.LongStream;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 import br.com.zupacademy.caico.proposta.criacaoproposta.analiserestricao.StatusProposta;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
 public class Propostas {
